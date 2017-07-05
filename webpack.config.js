@@ -2,6 +2,8 @@ const { resolve } = require('path');
 
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const OpenBrowserPlugin = require('open-browser-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: [
     './src/index.js',
@@ -11,7 +13,6 @@ module.exports = {
     path: resolve(__dirname, 'build'),
     filename: "bundle.js"
   },
-  context: resolve(__dirname, 'app'),
   module: {
     rules: [
       {
@@ -53,6 +54,10 @@ module.exports = {
     extensions: [".js", ".jsx"]
   },
   plugins: [
-    new ExtractTextPlugin({ filename: 'style.css', disable: false, allChunks: true})
+    new ExtractTextPlugin({ filename: 'style.css', disable: false, allChunks: true}),
+    new OpenBrowserPlugin({ url: 'http://localhost:8080' }),
+    new HtmlWebpackPlugin({
+      template: 'src/index.html'
+    })
   ]
 };
